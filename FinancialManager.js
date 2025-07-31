@@ -1476,33 +1476,58 @@ const FinancialManager = {
    */
   showAddBudgetEntryPanel: function() {
     const html = HtmlService.createHtmlOutput(`
-      <div style="font-family: Arial, sans-serif; padding:20px;">
-        <h3>Add Budget Entry</h3>
+      <div class="ab-container">
+        <h2>New Budget Entry</h2>
         <form id="entryForm">
-          <label>Date</label>
-          <input type="date" id="date" name="date" required value="${Utils.formatDate(new Date(), 'yyyy-MM-dd')}"><br>
-          <label>Type</label>
-          <select id="type" name="type" style="width:100%">
-            <option value="Income">Income</option>
-            <option value="Expense">Expense</option>
-          </select><br>
-          <label>Description</label>
-          <input type="text" id="desc" name="desc" required style="width:100%"><br>
-          <label>Amount</label>
-          <input type="number" id="amount" name="amount" step="0.01" required style="width:100%"><br>
-          <label>Category</label>
-          <input type="text" id="category" name="category" style="width:100%"><br>
-          <label>Payment Method</label>
-          <input type="text" id="method" name="method" style="width:100%"><br>
-          <label>Reference</label>
-          <input type="text" id="ref" name="reference" style="width:100%"><br>
-          <label>Tenant/Guest</label>
-          <input type="text" id="tenant" name="tenant" style="width:100%"><br>
-          <div style="text-align:right;margin-top:15px;">
-            <button type="button" onclick="submitEntry()">Add</button>
+          <div class="row">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required value="${Utils.formatDate(new Date(), 'yyyy-MM-dd')}">
+          </div>
+          <div class="row">
+            <label for="type">Type</label>
+            <select id="type" name="type">
+              <option value="Income">Income</option>
+              <option value="Expense">Expense</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="desc">Description</label>
+            <input type="text" id="desc" name="desc" required placeholder="Description">
+          </div>
+          <div class="row">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" name="amount" step="0.01" required>
+          </div>
+          <div class="row">
+            <label for="category">Category</label>
+            <input type="text" id="category" name="category" placeholder="e.g. Rent">
+          </div>
+          <div class="row">
+            <label for="method">Payment Method</label>
+            <input type="text" id="method" name="method" placeholder="Cash, Check...">
+          </div>
+          <div class="row">
+            <label for="ref">Reference</label>
+            <input type="text" id="ref" name="reference">
+          </div>
+          <div class="row">
+            <label for="tenant">Tenant/Guest</label>
+            <input type="text" id="tenant" name="tenant">
+          </div>
+          <div class="actions">
+            <button type="button" class="primary" onclick="submitEntry()">Add</button>
             <button type="button" onclick="google.script.host.close()">Cancel</button>
           </div>
         </form>
+        <style>
+          .ab-container{font-family:Arial,sans-serif;padding:20px;width:100%;box-sizing:border-box;}
+          h2{margin-top:0;margin-bottom:15px;text-align:center;}
+          .row{display:flex;flex-direction:column;margin-bottom:10px;}
+          label{font-weight:bold;margin-bottom:4px;}
+          input,select{padding:6px;border:1px solid #ccc;border-radius:4px;width:100%;box-sizing:border-box;}
+          .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:15px;}
+          .primary{background:#4caf50;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;}
+        </style>
         <script>
           function submitEntry(){
             const f=document.getElementById('entryForm');
@@ -1521,8 +1546,8 @@ const FinancialManager = {
           }
         </script>
       </div>
-    `).setWidth(360).setHeight(520);
-    SpreadsheetApp.getUi().showModalDialog(html,'Add Budget Entry');
+    `).setWidth(420).setHeight(560);
+    SpreadsheetApp.getUi().showModalDialog(html, 'Add Budget Entry');
   },
 
   /**
